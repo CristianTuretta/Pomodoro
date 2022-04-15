@@ -108,12 +108,12 @@ struct Pomodoro: Identifiable {
         switch modality {
         case .inactive:
             minutes = Int(timerWorking.timeLimit) / 60
-            seconds = Int(timerWorking.timeRemaining) % 60
+            seconds = Int(timerWorking.timeLimit) % 60
         case .working:
-            minutes = Int(timerWorking.timeLimit) / 60
+            minutes = Int(timerWorking.timeRemaining) / 60
             seconds = Int(timerWorking.timeRemaining) % 60
         case .breaking:
-            minutes = Int(timerBreaking.timeLimit) / 60
+            minutes = Int(timerBreaking.timeRemaining) / 60
             seconds = Int(timerBreaking.timeRemaining) % 60
         }
         
