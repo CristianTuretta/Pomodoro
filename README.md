@@ -11,7 +11,7 @@ Through this application you will be able to control your work and break time. I
 
 Once started and selected one mode, the application will automatically tell you when it is time to take a break and to work. Scheduling your time in this way will increase your productivity, it worked for me :)
 
-## How to downolad
+## Downolad and Run
 To download the app you have to click on `Releases`, be sure to pick the last one (marked as _lastest_) and the click on `Pomodoro.app.zip`.
 Once downloaded, go to the `Downloads` directory in your computer and right click on the `Pomodoro`, then click open. 
 You have to do these steps since I did not purchased yet the developer certificate by Apple which costs 100$/year. 
