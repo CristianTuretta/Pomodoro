@@ -78,7 +78,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         if let event = event {
             if event.type == .rightMouseUp {
                 print("Right click on status bar icon")
-                statusBarItem?.popUpMenu(setupMenu())
+                statusBarItem?.menu = setupMenu()
+                statusBarItem?.button?.performClick(nil)
+                statusBarItem?.menu = nil
                 
             } else if event.type == .leftMouseUp {
                 print("Left click on status bar icon")

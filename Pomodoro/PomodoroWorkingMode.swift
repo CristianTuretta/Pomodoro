@@ -38,8 +38,8 @@ class PomodoroWorkingMode: ObservableObject {
         model.switching(to: newModality)
     }
     
-    func changeMode(to newMode: String) {
-        model.change(selected: newMode)
+    func changeMode(to newMode: String, workMinutes: Int, breakMinutes: Int, preserveState: Bool = false) {
+        model.change(selected: newMode, workMinutes: workMinutes, breakMinutes: breakMinutes, preserveState: preserveState)
     }
     
 }
