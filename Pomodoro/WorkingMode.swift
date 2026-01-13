@@ -9,10 +9,17 @@ import Foundation
 import UserNotifications
 
 struct WorkingMode {
+    static let pomodoroDefaults = (work: 25, rest: 5)
+
     private(set) var mode: Pomodoro
     
     init() {
-        mode = Pomodoro(name: "Pomodoro", id: 1, workingTimeLimit: 25 * 60, breakingTimeLimit: 5 * 60)
+        mode = Pomodoro(
+            name: "Pomodoro",
+            id: 1,
+            workingTimeLimit: Double(WorkingMode.pomodoroDefaults.work) * 60,
+            breakingTimeLimit: Double(WorkingMode.pomodoroDefaults.rest) * 60
+        )
     }
     
     mutating func switching(to newModality: Pomodoro.Modality) {
@@ -54,14 +61,53 @@ struct WorkingMode {
         mode.switching(to: newModality)
     }
         
-    mutating func change(selected: String){
+    mutating func change(selected: String, workMinutes: Int, breakMinutes: Int, preserveState: Bool) {
+        let safeWorkMinutes = max(1, workMinutes)
+        let safeBreakMinutes = max(1, breakMinutes)
+
+        let (name, identifier): (String, Int) = {
+            switch selected {
+            case "Pomodoro":
+                return ("Pomodoro", 1)
+            case "Double Pomodoro":
+                return ("Double Pomodoro", 2)
+            default:
+                return ("Pomodoro", 1)
+            }
+        }()
+
+        if preserveState {
+            mode.name = name
+            mode.id = identifier
+            mode.workingTimeLimit = Double(safeWorkMinutes) * 60
+            mode.breakingTimeLimit = Double(safeBreakMinutes) * 60
+            mode.timerWorking.timeLimit = mode.workingTimeLimit
+            mode.timerBreaking.timeLimit = mode.breakingTimeLimit
+            return
+        }
+
         switch selected {
         case "Pomodoro":
-            mode = Pomodoro(name: "Pomodoro", id: 1, workingTimeLimit: 25 * 60, breakingTimeLimit: 5 * 60)
+            mode = Pomodoro(
+                name: name,
+                id: identifier,
+                workingTimeLimit: Double(safeWorkMinutes) * 60,
+                breakingTimeLimit: Double(safeBreakMinutes) * 60
+            )
         case "Double Pomodoro":
-            mode = Pomodoro(name: "Double Pomodoro", id: 2, workingTimeLimit: 50 * 60, breakingTimeLimit: 10 * 60)
+            mode = Pomodoro(
+                name: name,
+                id: identifier,
+                workingTimeLimit: Double(safeWorkMinutes) * 60,
+                breakingTimeLimit: Double(safeBreakMinutes) * 60
+            )
         default:
-            mode = Pomodoro(name: "Pomodoro", id: 3, workingTimeLimit: 25 * 60, breakingTimeLimit: 5 * 60)
+            mode = Pomodoro(
+                name: "Pomodoro",
+                id: 1,
+                workingTimeLimit: Double(WorkingMode.pomodoroDefaults.work) * 60,
+                breakingTimeLimit: Double(WorkingMode.pomodoroDefaults.rest) * 60
+            )
         }
     }
     
